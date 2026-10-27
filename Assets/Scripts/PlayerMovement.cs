@@ -1,46 +1,74 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Camera playerCamera; // The camera attached to the player
-    public float speed = 6f; // Movement speed of the player
-    public float lookSpeed = 2f; // Speed at which the player can look around
-    public float lookXLimit = 45f; // Limit for looking up and down
-    
-    private Vector3 moveDirection = Vector3.zero; // Direction the player is moving in
-    private float rotationX = 0f; // Current rotation around the X-axis (looking up and down)
-    private Rigidbody rb; // Reference to the Rigidbody component of the player
+    public Transform playerBall;
+    public Transform cameraTransform;
+    public float moveForce = 10f;
+    public float maxSpeed = 8f;
+    public float mouseSensitivity = 2f;
+    public float jumpForce = 5f;
 
-    private bool canMove = true; // Flag to determine if the player can move
+    private Rigidbody rb;
+    private float xRotation;
+    private float yRotation;
+    private bool isGrounded;
 
     void Start()
     {
-        rb = this.GetComponent<Rigidbody>();
-        Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen
-        Cursor.visible = false; // Hide the cursor
+        rb = playerBall.GetComponent<Rigidbody>();
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        rb.angularDamping = 0.05f;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
     {
-        Vector3 forward = transform.TransformDirection(Vector3.forward); // Get the forward direction relative to the player's orientation
-        Vector3 right = transform.TransformDirection(Vector3.right); // Get the right direction relative to the player's orientation
+        Look();
 
-        float curSpeedX = speed * Input.GetAxis("Vertical"); // Calculate the current speed in the forward/backward direction based on input
-        float curSpeedY = speed * Input.GetAxis("Horizontal"); // Calculate the current speed in the left/right direction based on input
-        float movementDirectionY = moveDirection.y; // Preserve the current vertical movement (e.g., gravity)
-        moveDirection = (forward * curSpeedX) + (right * curSpeedY); // Combine the forward and right movement directions to get the overall movement direction
+        isGrounded = Physics.Raycast(transform.position, Vector3.down,GetComponent<SphereCollider>().radius + 0.1f);
 
-        moveDirection.y = movementDirectionY; // Restore the vertical movement component to the moveDirection vector
-
-        rb.MovePosition(rb.position + moveDirection * Time.deltaTime); // Move the player to the new position based on the calculated movement direction and speed
-
-        if(canMove){
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed; // Update the rotation around the X-axis based on mouse input and look speed
-            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit); // Clamp the rotation to prevent looking too far up or down
-            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0); // Apply the rotation to the camera's local rotation to look up and down
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0); // Rotate the player around the Y-axis based on mouse input and look speed
+        if (isGrounded && Input.GetButtonDown("Jump"))
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
+    }
+
+    void LateUpdate()
+    {
+        cameraTransform.rotation = Quaternion.Euler(xRotation, yRotation, 0f);
+        
+        transform.position = playerBall.position;
+    }
+
+    void FixedUpdate()
+    {
+        float x = Input.GetAxisRaw("Horizontal");
+        float z = Input.GetAxisRaw("Vertical");
+
+        Vector3 inputDir = (transform.right * x + transform.forward * z).normalized;
+        rb.AddForce(inputDir * moveForce, ForceMode.Acceleration);
+
+        // Limit horizontal maximum speed
+        Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        if (flatVel.magnitude > maxSpeed)
+        {
+            Vector3 capped = flatVel.normalized * maxSpeed;
+            rb.linearVelocity = new Vector3(capped.x, rb.linearVelocity.y, capped.z);
+        }
+    }
+
+    void Look()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+        transform.Rotate(Vector3.up * mouseX);
     }
 }
