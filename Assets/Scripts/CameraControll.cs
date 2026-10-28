@@ -28,7 +28,7 @@ public class CameraControll : MonoBehaviour
         {
             if (obj != null)
             {
-                SetTransparency(obj, 1f);
+                SetTransparency(obj, 1f, 0);
             }
         }
         previousHits.Clear();
@@ -36,15 +36,28 @@ public class CameraControll : MonoBehaviour
         foreach (RaycastHit hit in hits) //Sets new hits to the new alpha
         {
             GameObject hitObj = hit.transform.gameObject;
-            SetTransparency(hitObj, 0.1f);
+            SetTransparency(hitObj, 0.1f, 1);
             previousHits.Add(hitObj);
         }
     }
 
-    void SetTransparency(GameObject obj, float alpha)
+    void SetTransparency(GameObject obj, float alpha, int transparency)
     {
         Renderer render = obj.GetComponent<Renderer>();
-        Color color = render.material.color;
-        render.material.color = new Color(color.r, color.g, color.b, alpha);
+        Material material = render.material;
+
+        if (material.HasProperty("_Surface"))
+        {
+            material.SetFloat("_Surface", transparency);
+            material.shader = material.shader;
+        }
+
+        string colorProp = material.HasProperty("_BaseColor") ? "_BaseColor" : "_BaseMap";
+        if (material.HasProperty(colorProp))
+        {
+            Color c = material.GetColor(colorProp);
+            c.a = alpha;
+            material.SetColor(colorProp, c);
+        }
     }
 }
