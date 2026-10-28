@@ -43,7 +43,8 @@ Alexander (Marble ribbon, water shader)
 In order to see the marble roll around, we needed an object inside of it. To do this, I added a ribbon as a child of the ball.
 
 The ribbon has a lit shader with a texturemap, and a SineTime function that changes the color of the shader by subtracting from BaseColor.
-<img width="1358" height="618" alt="Screenshot 2026-10-28 010800" src="https://github.com/user-attachments/assets/c0c472b0-c928-4774-b38d-2e3b1cdd2707" />
+<img width="299" height="115" alt="Screenshot_2026-10-28_002704" src="https://github.com/user-attachments/assets/bb7d8f61-59ca-4eb5-9ee0-ef161f7bfe10" />
+
 
 I created a water shader by utilizing Tiling and Offset with Time. The surface type is set to be transparent. Since I don’t have a particular texture I want to use, I use gradient noise. There are two different color properties so that negative space isn't just white. 
 <img width="925" height="570" alt="Screenshot_2026-10-28_011323" src="https://github.com/user-attachments/assets/c6c76b63-9a0d-4bdc-b7a8-d6551027e10b" />
