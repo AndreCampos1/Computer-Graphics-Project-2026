@@ -4,6 +4,7 @@ Shader "Unlit/HologramText"
     Properties
 
     {
+        _BaseTex ("Font Texture", 2D) = "white" {}
 
         _BaseColor ("Base Color", Color) = (1, 1, 1, 1)   // Base color of the object
 
@@ -19,7 +20,11 @@ Shader "Unlit/HologramText"
 
     {
 
-        Tags { "RenderPipeline" = "UniversalRenderPipeline" "RenderType" = "Opaque" }
+        Tags { "RenderPipeline" = "UniversalRenderPipeline" "RenderType" = "Opaque" "Queue" = "Transparent" }
+
+        Blend SrcAlpha One 
+        ZWrite Off
+        Cull Off
 
         Pass
 
@@ -45,6 +50,8 @@ Shader "Unlit/HologramText"
 
                 float4 tangentOS : TANGENT;    // Tangent space for rim light calculations
 
+                float2 uv : TEXCOORD0;
+
             };
 
             struct Varyings
@@ -53,11 +60,16 @@ Shader "Unlit/HologramText"
 
                 float4 positionHCS : SV_POSITION; // Homogeneous clip-space position
 
-                float3 viewDirWS : TEXCOORD0;     // View direction in world space
+                float3 viewDirWS : TEXCOORD1;     // View direction in world space
 
-                float3 normalWS : TEXCOORD1;      // World space normal
+                float3 normalWS : TEXCOORD2;      // World space normal
+
+                float2 uv : TEXCOORD0;
 
             };
+
+            TEXTURE2D(_BaseTex);
+            SAMPLER(sampler_BaseTex);
 
             CBUFFER_START(UnityPerMaterial)
 
@@ -69,9 +81,9 @@ Shader "Unlit/HologramText"
 
                 float _Glow;
 
-            CBUFFER_END
+                float4 _BaseTex_ST;
 
-            // Vertex Shader
+            CBUFFER_END
 
             Varyings vert(Attributes IN)
 
@@ -82,6 +94,8 @@ Shader "Unlit/HologramText"
                 // Transform object space position to homogeneous clip-space position
 
                 OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
+
+                OUT.uv = TRANSFORM_TEX(IN.uv, _BaseTex);
 
                 // Transform object space normal to world space
 
@@ -109,6 +123,8 @@ Shader "Unlit/HologramText"
 
                 half3 viewDirWS = normalize(IN.viewDirWS);
 
+                half textAlpha = SAMPLE_TEXTURE2D(_BaseTex, sampler_BaseTex, IN.uv).a;
+
                 // Rim lighting calculation (using dot product between normal and view direction)
 
                 half rimFactor = 1.0 - saturate(dot(viewDirWS, normalWS));
@@ -117,9 +133,11 @@ Shader "Unlit/HologramText"
 
                 // Combine rim lighting color with the base color
 
-                half3 finalColor = _BaseColor.rgb + _RimColor.rgb * rimLighting * _Glow;
+                half3 finalColor = _BaseColor.rgb + (_RimColor.rgb * rimLighting * _Glow);
 
-                return half4(finalColor, _BaseColor.a);
+                half finalAlpha = (_BaseColor.a + rimLighting) * textAlpha;
+
+                return half4(finalColor, finalAlpha);
 
             }
 
