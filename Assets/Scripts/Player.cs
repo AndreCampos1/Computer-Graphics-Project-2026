@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
         if (velVector.magnitude > 0.000001f)
         {
             Vector3 axis = Vector3.Cross(Vector3.up, velVector.normalized);
-            float angle = (velVector.magnitude / ballRadius) * Mathf.Rad2Deg;
+            float angle = velVector.magnitude / ballRadius * Mathf.Rad2Deg;
             ballRotation = Quaternion.AngleAxis(angle, axis) * ballRotation;
         }
 
