@@ -44,11 +44,11 @@ Shader "Unlit/HologramText"
 
             {
 
-                float4 positionOS : POSITION;  // Object space position
+                float4 positionOS : POSITION;
 
-                float3 normalOS : NORMAL;      // Object space normal
+                float3 normalOS : NORMAL;
 
-                float4 tangentOS : TANGENT;    // Tangent space for rim light calculations
+                float4 tangentOS : TANGENT;
 
                 float2 uv : TEXCOORD0;
 
@@ -58,11 +58,11 @@ Shader "Unlit/HologramText"
 
             {
 
-                float4 positionHCS : SV_POSITION; // Homogeneous clip-space position
+                float4 positionHCS : SV_POSITION;
 
-                float3 viewDirWS : TEXCOORD1;     // View direction in world space
+                float3 viewDirWS : TEXCOORD1;
 
-                float3 normalWS : TEXCOORD2;      // World space normal
+                float3 normalWS : TEXCOORD2;
 
                 float2 uv : TEXCOORD0;
 
@@ -73,11 +73,11 @@ Shader "Unlit/HologramText"
 
             CBUFFER_START(UnityPerMaterial)
 
-                float4 _BaseColor;   // Base color property
+                float4 _BaseColor;
 
-                float4 _RimColor;    // Rim color property
+                float4 _RimColor;
 
-                float _RimPower;     // Rim power property
+                float _RimPower;
 
                 float _Glow;
 
@@ -91,17 +91,11 @@ Shader "Unlit/HologramText"
 
                 Varyings OUT;
 
-                // Transform object space position to homogeneous clip-space position
-
                 OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
 
                 OUT.uv = TRANSFORM_TEX(IN.uv, _BaseTex);
 
-                // Transform object space normal to world space
-
                 OUT.normalWS = normalize(TransformObjectToWorldNormal(IN.normalOS));
-
-                // Calculate the view direction in world space (from the camera to the surface)
 
                 float3 worldPosWS = TransformObjectToWorld(IN.positionOS.xyz);
 
@@ -110,8 +104,6 @@ Shader "Unlit/HologramText"
                 return OUT;
 
             }
-
-            // Fragment Shader
 
             half4 frag(Varyings IN) : SV_Target
 
