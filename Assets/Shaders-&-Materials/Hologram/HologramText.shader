@@ -20,7 +20,7 @@ Shader "Unlit/HologramText"
 
     {
 
-        Tags { "RenderPipeline" = "UniversalRenderPipeline" "RenderType" = "Opaque" "Queue" = "Transparent" }
+        Tags { "RenderPipeline" = "UniversalRender" "RenderType" = "Opaque" "Queue" = "Transparent" }
 
         Blend SrcAlpha One 
         ZWrite Off
