@@ -391,6 +391,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -629719859055844128, guid: 1933f34536243c4438e11629b5b22099, type: 3}
+--- !u!4 &463338469 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3081623836593974640, guid: f19dcc4879440c2409206484f870dbad, type: 3}
+  m_PrefabInstance: {fileID: 5977738384130244163}
+  m_PrefabAsset: {fileID: 0}
 --- !u!64 &547237060
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -457,6 +462,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1521947774303456365, guid: 1933f34536243c4438e11629b5b22099, type: 3}
+--- !u!1 &652785078 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 502723520507065173, guid: f19dcc4879440c2409206484f870dbad, type: 3}
+  m_PrefabInstance: {fileID: 5977738384130244163}
+  m_PrefabAsset: {fileID: 0}
 --- !u!64 &709232263
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1960,6 +1970,59 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 804796395689761281, guid: 1933f34536243c4438e11629b5b22099, type: 3}
+--- !u!1 &1611834602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1611834604}
+  - component: {fileID: 1611834603}
+  m_Layer: 0
+  m_Name: Checkpoints folder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1611834603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611834602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b546cb693bc8e954096e0489c5a0065e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentCheckpoint: {fileID: 0}
+  checkpoint1: {fileID: 652785078}
+  checkpoint2: {fileID: 0}
+  checkpoint3: {fileID: 0}
+  checkpoint4: {fileID: 0}
+  checkpoint5: {fileID: 0}
+  checkpoint6: {fileID: 0}
+  checkpoint7: {fileID: 0}
+--- !u!4 &1611834604
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611834602}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 463338469}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1728572978
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2054,7 +2117,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1611834604}
     m_Modifications:
     - target: {fileID: 3081623836593974640, guid: f19dcc4879440c2409206484f870dbad, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2074,15 +2137,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3081623836593974640, guid: f19dcc4879440c2409206484f870dbad, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3081623836593974640, guid: f19dcc4879440c2409206484f870dbad, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3081623836593974640, guid: f19dcc4879440c2409206484f870dbad, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3081623836593974640, guid: f19dcc4879440c2409206484f870dbad, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2121,4 +2184,4 @@ SceneRoots:
   - {fileID: 58462626}
   - {fileID: 937877205}
   - {fileID: 761734358}
-  - {fileID: 5977738384130244163}
+  - {fileID: 1611834604}
