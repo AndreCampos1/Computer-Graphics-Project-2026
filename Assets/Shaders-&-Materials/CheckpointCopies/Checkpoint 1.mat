@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Checkpoint
+  m_Name: Checkpoint 1
   m_Shader: {fileID: -6465566751694194690, guid: c432343b270f541499267506abda5306, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -82,7 +82,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2D:
-        m_Texture: {fileID: 2800000, guid: ff17b77b722d7cf42a107685187eb6f5, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -117,8 +117,8 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _IsCurrent: 0
-    - _IsPast: 0
+    - _IsCurrent: 1
+    - _IsPast: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005

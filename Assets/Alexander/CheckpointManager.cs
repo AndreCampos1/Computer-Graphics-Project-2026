@@ -3,14 +3,10 @@ using UnityEngine;
 
 public class CheckpointManager : MonoBehaviour
 {
-    //Material stuff
-    private Material lastMaterial;
-    private Material currentMaterial;
-
     [Header("Current Checkpoint")]
-    [SerializeField] Collider CurrentCheckpoint;
+    [SerializeField] GameObject CurrentCheckpoint;
 
-    [Header("Checkpoints")]
+    [Header("Checkpoint colliders")]
     [SerializeField] GameObject checkpoint1;
     [SerializeField] GameObject checkpoint2;
     [SerializeField] GameObject checkpoint3;
@@ -22,58 +18,51 @@ public class CheckpointManager : MonoBehaviour
 
     public void Start()
     {
-        CurrentCheckpoint = checkpoint1.GetComponent<Collider>();
-        currentMaterial = CurrentCheckpoint.GetComponent<Renderer>().material;
-        PrepareCurrentMaterial();
+        CurrentCheckpoint = checkpoint1;
+        CurrentCheckpoint.GetComponent<CheckpointInstance>().IsCurrentCheckpoint();
     }
 
-    public void OnTriggerEnter(Collider CurrentCheckpoint)
+    public void PromptCheckpointManager(Collider checkpointTrigger)
     {
-        if (CurrentCheckpoint.CompareTag("Player"))
+        if (checkpointTrigger.gameObject == CurrentCheckpoint)
         {
-            PrepareLastMaterial();
+            Debug.Log("Checkpoint Triggered");
+            CurrentCheckpoint.GetComponent<CheckpointInstance>().IsPastCheckpoint();
             SetupNextCheckpoint();
-            PrepareCurrentMaterial();
+            CurrentCheckpoint.GetComponent<CheckpointInstance>().IsCurrentCheckpoint();
         }
-            
+        else
+        {
+            Debug.Log("Wrong Checkpoint Triggered");
+        }
     }
 
     //I don't know how to automate this.
     public void SetupNextCheckpoint()
     {
-        if (CurrentCheckpoint == checkpoint1.GetComponent<Collider>())
+        if (CurrentCheckpoint == checkpoint1)
         {
-            CurrentCheckpoint = checkpoint2.GetComponent<Collider>();
+            CurrentCheckpoint = checkpoint2;
         }
-        else if (CurrentCheckpoint == checkpoint2.GetComponent<Collider>())
+        else if (CurrentCheckpoint == checkpoint2)
         {
-            CurrentCheckpoint = checkpoint3.GetComponent<Collider>();
+            CurrentCheckpoint = checkpoint3;
         }
-        else if (CurrentCheckpoint == checkpoint3.GetComponent<Collider>())
+        else if (CurrentCheckpoint == checkpoint3)
         {
-            CurrentCheckpoint = checkpoint4.GetComponent<Collider>();
+            CurrentCheckpoint = checkpoint4;
         }
-        else if (CurrentCheckpoint == checkpoint4.GetComponent<Collider>())
+        else if (CurrentCheckpoint == checkpoint4)
         {
-            CurrentCheckpoint = checkpoint5.GetComponent<Collider>();
+            CurrentCheckpoint = checkpoint5;
         }
-        else if (CurrentCheckpoint == checkpoint5.GetComponent<Collider>())
+        else if (CurrentCheckpoint == checkpoint5)
         {
-            CurrentCheckpoint = checkpoint6.GetComponent<Collider>();
+            CurrentCheckpoint = checkpoint6;
         }
-        else if (CurrentCheckpoint == checkpoint6.GetComponent<Collider>())
+        else if (CurrentCheckpoint == checkpoint6)
         {
-            CurrentCheckpoint = checkpoint7.GetComponent<Collider>();
+            CurrentCheckpoint = checkpoint7;
         }
-    }
-
-    public void PrepareCurrentMaterial()
-    {
-        currentMaterial.SetInt("_IsCurrent", 1);
-    }
-
-    public void PrepareLastMaterial()
-    {
-        lastMaterial.SetInt("_IsPast", 1);
     }
 }
