@@ -2237,7 +2237,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b546cb693bc8e954096e0489c5a0065e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentCheckpoint: {fileID: 0}
+  currentCheckpoint: {fileID: 0}
+  gameManager: {fileID: 275161804}
   checkpoint1: {fileID: 1835879643}
   checkpoint2: {fileID: 2014744169}
   checkpoint3: {fileID: 1937730046}

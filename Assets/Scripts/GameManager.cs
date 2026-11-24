@@ -28,7 +28,15 @@ public class GameManager : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("You won!");
+            Debug.Log("Time Remaining: " + timeToFinish);
             Time.timeScale = 0;
         }
+    }
+
+    public void EndGame()
+    {
+        Debug.Log("Game Over");
+        Debug.Log("Time Remaining: " + timeToFinish);
+        Time.timeScale = 0;
     }
 }

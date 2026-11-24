@@ -4,7 +4,10 @@ using UnityEngine;
 public class CheckpointManager : MonoBehaviour
 {
     [Header("Current Checkpoint")]
-    [SerializeField] GameObject CurrentCheckpoint;
+    [SerializeField] GameObject currentCheckpoint;
+
+    [Header("Game Manager")]
+    [SerializeField] GameManager gameManager;
 
     [Header("Checkpoint colliders")]
     [SerializeField] GameObject checkpoint1;
@@ -18,18 +21,18 @@ public class CheckpointManager : MonoBehaviour
 
     public void Start()
     {
-        CurrentCheckpoint = checkpoint1;
-        CurrentCheckpoint.GetComponent<CheckpointInstance>().IsCurrentCheckpoint();
+        currentCheckpoint = checkpoint1;
+        currentCheckpoint.GetComponent<CheckpointInstance>().IsCurrentCheckpoint();
     }
 
     public void PromptCheckpointManager(Collider checkpointTrigger)
     {
-        if (checkpointTrigger.gameObject == CurrentCheckpoint)
+        if (checkpointTrigger.gameObject == currentCheckpoint)
         {
             Debug.Log("Checkpoint Triggered");
-            CurrentCheckpoint.GetComponent<CheckpointInstance>().IsPastCheckpoint();
+            currentCheckpoint.GetComponent<CheckpointInstance>().IsPastCheckpoint();
             SetupNextCheckpoint();
-            CurrentCheckpoint.GetComponent<CheckpointInstance>().IsCurrentCheckpoint();
+            currentCheckpoint.GetComponent<CheckpointInstance>().IsCurrentCheckpoint();
         }
         else
         {
@@ -40,29 +43,58 @@ public class CheckpointManager : MonoBehaviour
     //I don't know how to automate this.
     public void SetupNextCheckpoint()
     {
-        if (CurrentCheckpoint == checkpoint1)
+        if (currentCheckpoint == checkpoint1 && checkpoint2 != null)
         {
-            CurrentCheckpoint = checkpoint2;
+            currentCheckpoint = checkpoint2;
         }
-        else if (CurrentCheckpoint == checkpoint2)
+        else if (currentCheckpoint == checkpoint1 && checkpoint2 == null)
         {
-            CurrentCheckpoint = checkpoint3;
+            gameManager.EndGame();
         }
-        else if (CurrentCheckpoint == checkpoint3)
+
+        else if (currentCheckpoint == checkpoint2 && checkpoint3 != null)
         {
-            CurrentCheckpoint = checkpoint4;
+            currentCheckpoint = checkpoint3;
         }
-        else if (CurrentCheckpoint == checkpoint4)
+        else if (currentCheckpoint == checkpoint2 && checkpoint3 == null)
         {
-            CurrentCheckpoint = checkpoint5;
+            gameManager.EndGame();
         }
-        else if (CurrentCheckpoint == checkpoint5)
+
+        else if (currentCheckpoint == checkpoint3 && checkpoint4 != null)
         {
-            CurrentCheckpoint = checkpoint6;
+            currentCheckpoint = checkpoint4;
         }
-        else if (CurrentCheckpoint == checkpoint6)
+        else if (currentCheckpoint == checkpoint3 && checkpoint4 == null)
         {
-            CurrentCheckpoint = checkpoint7;
+            gameManager.EndGame();
+        }
+
+        else if (currentCheckpoint == checkpoint4 && checkpoint5 != null)
+        {
+            currentCheckpoint = checkpoint5;
+        }
+        else if (currentCheckpoint == checkpoint4 && checkpoint5 == null)
+        {
+            gameManager.EndGame();
+        }
+
+        else if (currentCheckpoint == checkpoint5 && checkpoint6 != null)
+        {
+            currentCheckpoint = checkpoint6;
+        }
+        else if (currentCheckpoint == checkpoint5 && checkpoint6 == null)
+        {
+            gameManager.EndGame();
+        }
+
+        else if (currentCheckpoint == checkpoint6 && checkpoint7 != null)
+        {
+            currentCheckpoint = checkpoint7;
+        }
+        else if (currentCheckpoint == checkpoint6 && checkpoint7 == null)
+        {
+            gameManager.EndGame();
         }
     }
 }
