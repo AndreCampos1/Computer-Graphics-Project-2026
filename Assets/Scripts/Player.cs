@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     public float ballRadius = 0.5f;
     public float walkSpeed = 4f;
     public float sprintSpeed = 7f;
+    public float acceleration = 30f;
+    public float deceleration = 12f;
     public float mouseSensitivity = 2f;
     public float jumpForce = 8f;
     public float gravity = -20f;
