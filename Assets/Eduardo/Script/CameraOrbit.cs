@@ -25,6 +25,15 @@ public class CameraOrbit : MonoBehaviour
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             target = player.transform;
         }
+        cameraCollisionMask = ~LayerMask.GetMask("CameraCollision");
+
+        for(int i = 0; i < 32; i++)
+        {
+            if ((cameraCollisionMask & (1 << i)) != 0)
+            {
+                Debug.Log("Layer " + i + ": " + LayerMask.LayerToName(i));
+            }
+        }
     }
 
     void LateUpdate()

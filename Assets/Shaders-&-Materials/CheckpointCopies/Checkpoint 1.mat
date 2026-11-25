@@ -118,7 +118,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _IsCurrent: 1
-    - _IsPast: 0
+    - _IsPast: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
