@@ -117,7 +117,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _IsCurrent: 1
+    - _IsCurrent: 0
     - _IsPast: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
